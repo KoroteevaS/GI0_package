@@ -1,0 +1,18 @@
+Package: GI0
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Svetlana", "Koroteeva",, "svetlana.koroteebva@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0001-0008-6321"))
+Description: It provides the four basic functions for playing with probability distribution.
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports:
+	fitdistrplus
+Depends:
+  R (>= 4.1)
