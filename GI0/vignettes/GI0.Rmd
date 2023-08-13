@@ -153,19 +153,20 @@ legend("topright", legend=c("a=-1", "a=-3", "a=-10"), col=c("skyblue4", "coral3"
 ```
 ```{r}
 # Checking gamma
-plot(x, qGI0(x, p_alpha=-3, p_gamma=1, p_Looks=1),  
+x <- seq(0, 20, length.out = 200) 
+plot(x, qGI0(x, p_alpha=-1, p_gamma=1, p_Looks=1),  
      log="y", type="l", xlab="x", ylab="Quantiles",
-     main="Quantile changing Gamma")
-lines(x, qGI0(x, p_alpha=-3, p_gamma=3, p_Looks=1), col="coral2")
-lines(x, qGI0(x, p_alpha=-3, p_gamma=10, p_Looks=1), col="aquamarine3")
-legend("topright", legend=c("g=1", "g=3", "g=10"), col=c("skyblue3", "coral2", "aquamarine3"), lty=1)
+     main="Quantile changing Gamma",col="skyblue", xlim=c(0,1))
+lines(x, qGI0(x, p_alpha=-1, p_gamma=1, p_Looks=1), col="coral2")
+lines(x, qGI0(x, p_alpha=-1, p_gamma=3, p_Looks=1), col="aquamarine3")
+legend("topright", legend=c("g=1", "g=3", "g=10"), col=c("skyblue", "coral2", "aquamarine3"), lty=1)
 ```
 <h2>2. Histograms and Simulated Data</h2>
 
-rGI0 function is used to simulate data from the GI0 distribution and create histograms to visualize the data distribution with the underlying density. Freedman-Diaconis rule to change size of blocks depending on sample size (100,500,1000)
+rGI0 function is used to simulate data from the GI0 distribution and create histograms to visualize the data distribution with the underlying density. Freedman-Diaconis rule is used to regulate size of blocks depending on sample size (100,500,1000)
 
 ```{r}
-set.seed(123)  # For reproducibility
+set.seed(123)  
 sample_sizes <- c(100,500,1000) 
 for (sample_size in sample_sizes)
   {
@@ -188,9 +189,28 @@ hist(simulated_data,  breaks = num_bins,
 ```
 <h1>3. Cullen-Frey Plots</h1>
 
+Cullen-Frey plots are used to compare GI0 distribution with "canonical" models. For the analysis "fitdistrplus" package is used.
+
+Cullen-Frey plots helps understanding the distribution's characteristics and evaluating how they related to canonical statistical models. This method was applied to both the simulated data generated from the GI0 distribution, uniform distribution, and normal distribution.
+
+In "simulated data" plot observation are scattered and bootstrapping values are shown as a blue spot in the middle. They all are in the area of beta distribution, however as orange spots are not concentrated, it means that data does not fit well the beta model. If compare it to the normal and uniform distributions - observations are concentrated around bootstrapping values and bootstrapping values covers the signs for uniform (triangle) and normal (star) distributions correspondingly.
+It also could be seen from skewness and kurtosis values.
+
 
 ```{r}
-# Create Cullen-Frey plots
-descdist(simulated_data, boot=100)
+#Cullen-Frey plots
+library(fitdistrplus)
+
+# Create Cullen-Frey plots with specified titles
+descdist(simulated_data, boot = 100)
+mtext("Simulated Data")
+
+
 descdist(x, boot = 100)
+mtext("Uniform Data")
+
+descdist(rnorm(1000), boot = 100)
+mtext("Normal Data")
+
+
 ```
